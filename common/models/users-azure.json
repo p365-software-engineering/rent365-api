@@ -1,0 +1,27 @@
+{
+  "name": "Users-Azure",
+  "plural": "user-authX",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "user_uid": {
+      "type": "string",
+      "required": true,
+      "default": "first_name"
+    },
+    "middle_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  rent365-api:
+    image: rent365-api
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
