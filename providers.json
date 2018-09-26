@@ -1,0 +1,18 @@
+{
+     "google-login": {
+        "clientID": "999896046692-s0s1c3hh3prmchn8ng5fmcbc1m22bjfv.apps.googleusercontent.com",
+        "projectId": "rent365-1537914498470",
+        "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
+        "token_uri": "https:\/\/www.googleapis.com\/oauth2\/v3\/token",
+        "auth_provider_x509_cert_url": "https:\/\/www.googleapis.com\/oauth2\/v1\/certs",
+        "client_secret": "DYXeLb6uVbFbFX9-OPL4-R3F",
+        "provider": "google",
+        "module": "passport-google-oauth",
+        "strategy": "OAuth2Strategy",
+        "callbackURL": "/auth/google/callback",
+        "authPath": "/auth/google",
+        "callbackPath": "/auth/google/callback",
+        "scope": ["email", "profile"],
+        "failureFlash": true
+    }
+}

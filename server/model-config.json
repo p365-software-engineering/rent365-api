@@ -4,7 +4,9 @@
       "loopback/common/models",
       "loopback/server/models",
       "../common/models",
-      "./models"
+      "./models",
+      "./node_modules/loopback-component-passport/lib/models",
+      "../node_modules/loopback-component-passport/lib/models"
     ],
     "mixins": [
       "loopback/common/mixins",
@@ -14,10 +16,11 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "local",
+    "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false
   },
   "ACL": {
@@ -35,8 +38,20 @@
     "dataSource": "db",
     "public": false
   },
-  "Users-Azure": {
-    "dataSource": "postgress-google",
+  "appUser": {
+    "dataSource": "local",
     "public": true
+  },
+  "admin": {
+    "dataSource": "local",
+    "public": true
+  },
+  "UserCredential": {
+    "dataSource": "local",
+    "public": false
+  },
+  "UserIdentity": {
+    "dataSource": "local",
+    "public": false
   }
 }

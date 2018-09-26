@@ -12,5 +12,14 @@
     "name": "postgress-google",
     "user": "postgres",
     "connector": "postgresql"
+  },
+  "local": {
+    "host": "localhost",
+    "port": "5432",
+    "url": "postgres://tylercitrin@localhost/rent365",
+    "database": "rent365",
+    "name": "local",
+    "user": "postgres",
+    "connector": "postgresql"
   }
 }
