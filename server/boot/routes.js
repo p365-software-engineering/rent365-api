@@ -3,12 +3,23 @@
 module.exports = function(app) {
 
     const router = app.loopback.Router();
-
     const strategies = require('../../strategies.json');
-
     const AppUser = app.models.appUser;
-
     const passport = require('passport');
+    const utils = require('../utils');
+
+    // TODO: change to user.id
+    passport.serializeUser(function(user, cb) {
+        cb(null, user);
+    });
+      
+    passport.deserializeUser(function(obj, cb) {
+        cb(null, obj);
+        // User.findById(id).then(user => {
+        //     done(err, user);
+        // });
+    });
+
     const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
     passport.use(new GoogleStrategy({
         clientID        : strategies.googleAuth.clientID,
@@ -16,21 +27,32 @@ module.exports = function(app) {
         callbackURL     : strategies.googleAuth.callbackURL,
     }, (accessToken, refreshToken, profile, done) => {
         console.log(accessToken);
+        console.log();
         console.log(refreshToken);
+        console.log();
         console.log(profile);
-        done(null)
-        // User.findOne({ googleId: profile.id }).then((existingUser) => {
-        //         if (existingUser) {
-        //         // don't create a new user
-        //         done(null, existingUser);
-
-        //         } else {
-        //         // create a new user    
-        //         new User ({ googleId: profile.id }).save()
-        //         .then(user => (null, user));
-
-        //         }
-        //     })
+        AppUser.findOne({ googleId: profile.id }).then((existingUser) => {
+            if (existingUser) {
+                console.log('existingUser');
+                console.log(existingUser);
+                AppUser.login(existingUser)
+                done(null, existingUser);
+            } else {
+                console.log('newUser');
+                const newUser        = new AppUser();
+                newUser.google       = {};
+                newUser.google.id    = profile.id;
+                newUser.google.token = accessToken;
+                newUser.google.name  = profile.displayName;
+                newUser.google.email = profile.emails[0].value; // pull only the first email
+                newUser.email = newUser.google.email;
+                newUser.password = utils.generateKey('hashcash');
+                newUser.save(function(err) {
+                    if (err) throw err;
+                    return done(null, newUser);
+                });
+            }
+        })
     }));
 
     router.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));

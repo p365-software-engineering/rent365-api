@@ -6,7 +6,7 @@ var server = require('./server');
 var ds = server.dataSources.local;
 
 // TODO: separate this between built in tables and our own
-var tables = ['admin', 'appUser', 'AccessToken'];
+var tables = ['admin', 'appUser', 'AccessToken', 'UserCredential', 'UserIdentity'];
 
 // TODO: Try auto auto update
 
