@@ -31,11 +31,12 @@ module.exports = function(app) {
         console.log(refreshToken);
         console.log();
         console.log(profile);
+        // TODO: figureout how findOne works without setting googleId
         AppUser.findOne({ googleId: profile.id }).then((existingUser) => {
             if (existingUser) {
                 console.log('existingUser');
                 console.log(existingUser);
-                AppUser.login(existingUser)
+                // AppUser.login(existingUser)
                 done(null, existingUser);
             } else {
                 console.log('newUser');

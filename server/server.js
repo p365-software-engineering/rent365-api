@@ -62,7 +62,7 @@ boot(app, __dirname, function(err) {
 });
 
 passportConfigurator.setupModels({
-  userModel: app.models.appUser,
+  userModel: app.models.user,
   userIdentityModel: app.models.userIdentity,
   userCredentialModel: app.models.userCredential,
 });
