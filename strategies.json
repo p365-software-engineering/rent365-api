@@ -1,5 +1,5 @@
 {
-     "google-login": {
+     "googleAuth": {
         "clientID": "999896046692-s0s1c3hh3prmchn8ng5fmcbc1m22bjfv.apps.googleusercontent.com",
         "projectId": "rent365-1537914498470",
         "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
@@ -9,7 +9,7 @@
         "provider": "google",
         "module": "passport-google-oauth",
         "strategy": "OAuth2Strategy",
-        "callbackURL": "/auth/google/callback",
+        "callbackURL": "http://localhost:3000/auth/google/callback",
         "authPath": "/auth/google",
         "callbackPath": "/auth/google/callback",
         "scope": ["email", "profile"],

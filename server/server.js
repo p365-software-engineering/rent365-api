@@ -4,6 +4,7 @@ const loopback = require('loopback');
 const boot = require('loopback-boot');
 const app = module.exports = loopback();
 const session = require('express-session');
+const bodyParser = require('body-parser');
 
 app.start = function() {
   // start the web server
@@ -19,10 +20,18 @@ app.start = function() {
   });
 };
 
+// to support JSON-encoded bodies
+app.middleware('parse', bodyParser.json());
+// to support URL-encoded bodies
+app.middleware('parse', bodyParser.urlencoded({
+  extended: true,
+}));
+
 // Passport configurators..
 const loopbackPassport = require('loopback-component-passport');
 const PassportConfigurator = loopbackPassport.PassportConfigurator;
 const passportConfigurator = new PassportConfigurator(app);
+
 
 // attempt to build the providers/passport config
 let config = {};
@@ -62,5 +71,5 @@ for (const iter in config) {
   const provider = config[iter];
   provider.session = provider.session !== false;
   passportConfigurator.configureProvider(iter, provider);
-  // console.log(provider);
 }
+

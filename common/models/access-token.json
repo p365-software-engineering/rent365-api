@@ -5,7 +5,7 @@
     "properties": {},
     "validations": [],
     "relations": {
-      "appUser": {
+      "accessTokens": {
         "type": "belongsTo",
         "model": "appUser",
         "foreignKey": "user_id"
