@@ -42,10 +42,6 @@
     "dataSource": "local",
     "public": true
   },
-  "admin": {
-    "dataSource": "local",
-    "public": true
-  },
   "UserCredential": {
     "dataSource": "local",
     "public": false

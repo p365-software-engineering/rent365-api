@@ -6,19 +6,9 @@ const app = module.exports = loopback();
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
-app.start = function() {
-  // start the web server
-  return app.listen(function() {
-    app.emit('started');
-    const baseUrl = app.get('url').replace(/\/$/, '');
-    console.log('Web server listening at: %s', baseUrl);
-    if (app.get('loopback-component-explorer')) {
-      console.log(process.env.PORT);
-      // const explorerPath = app.get('loopback-component-explorer').mountPath;
-      // console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
-    }
-  });
-};
+////////////////////////////////
+//      Middle-Ware           //
+////////////////////////////////
 
 // to support JSON-encoded bodies
 app.middleware('parse', bodyParser.json());
@@ -27,10 +17,10 @@ app.middleware('parse', bodyParser.urlencoded({
   extended: true,
 }));
 
-// Passport configurators..
-const loopbackPassport = require('loopback-component-passport');
-const PassportConfigurator = loopbackPassport.PassportConfigurator;
-const passportConfigurator = new PassportConfigurator(app);
+// The access token is only available after boot
+app.middleware('auth', loopback.token({
+  model: app.models.accessToken,
+}));
 
 
 // attempt to build the providers/passport config
@@ -49,7 +39,19 @@ app.middleware('session', session({
   resave: true,
 }));
 
-passportConfigurator.init();
+app.start = function() {
+  // start the web server
+  return app.listen(function() {
+    app.emit('started');
+    const baseUrl = app.get('url').replace(/\/$/, '');
+    console.log('Web server listening at: %s', baseUrl);
+    if (app.get('loopback-component-explorer')) {
+      console.log(process.env.PORT);
+      // const explorerPath = app.get('loopback-component-explorer').mountPath;
+      // console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+    }
+  });
+};
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
@@ -61,6 +63,19 @@ boot(app, __dirname, function(err) {
     app.start();
 });
 
+
+
+////////////////////////////////
+//      Passport              //
+////////////////////////////////
+
+// Passport configurators..
+const loopbackPassport = require('loopback-component-passport');
+const PassportConfigurator = loopbackPassport.PassportConfigurator;
+const passportConfigurator = new PassportConfigurator(app);
+
+// Passport Setup
+passportConfigurator.init();
 passportConfigurator.setupModels({
   userModel: app.models.user,
   userIdentityModel: app.models.userIdentity,
@@ -72,4 +87,3 @@ for (const iter in config) {
   provider.session = provider.session !== false;
   passportConfigurator.configureProvider(iter, provider);
 }
-
