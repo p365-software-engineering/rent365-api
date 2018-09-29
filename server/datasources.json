@@ -12,5 +12,15 @@
     "name": "postgress-google",
     "user": "postgres",
     "connector": "postgresql"
+  },
+  "local": {
+    "host": "localhost",
+    "port": 5432,
+    "url": "postgres://postgres:Eversmile24@localhost/rent365?ssl=false",
+    "database": "rent365",
+    "password": "Eversmile24",
+    "name": "local",
+    "user": "postgres",
+    "connector": "postgresql"
   }
 }

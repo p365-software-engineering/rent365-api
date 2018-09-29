@@ -1,0 +1,50 @@
+{
+  "name": "account",
+  "plural": "accounts",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "default": "na"
+    },
+    "middle_name": {
+      "type": "string",
+      "default": "na"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "default": "customer"
+    },
+    "birth_date": {
+      "type": "string",
+      "default": "na"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "accessTokens": {
+      "type": "hasMany",
+      "model": "AccessToken",
+      "foreignKey": "userId"
+    },
+    "identities": {
+      "type": "hasMany",
+      "model": "userIdentity",
+      "foreignKey": "userId"
+    },
+    "credentials": {
+      "type": "hasMany",
+      "model": "userCredential",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

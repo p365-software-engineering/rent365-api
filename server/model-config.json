@@ -4,7 +4,8 @@
       "loopback/common/models",
       "loopback/server/models",
       "../common/models",
-      "./models"
+      "./models",
+      "../node_modules/loopback-component-passport/lib/models"
     ],
     "mixins": [
       "loopback/common/mixins",
@@ -14,29 +15,49 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "local"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "local",
+    "public": false
+  },
+  "Application": {
+    "dataSource": "local",
+    "public": false
+  },
+  "ApplicationCredential": {
+    "dataSource": "local",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false
   },
-  "Users-Azure": {
-    "dataSource": "postgress-google",
+  "account": {
+    "dataSource": "local",
     "public": true
+  },
+  "UserIdentity": {
+    "dataSource": "local",
+    "public": false
+  },
+  "userCredential": {
+    "dataSource": "local",
+    "public": false
+  },
+  "userIdentity": {
+    "dataSource": "local",
+    "public": false
   }
 }
