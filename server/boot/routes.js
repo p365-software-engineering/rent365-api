@@ -31,46 +31,73 @@ module.exports = function(app) {
         callbackURL     : strategies.googleAuth.callbackURL,
         passReqToCallback: true
     }, (req, accessToken, refreshToken, profile, done) => {
-        profile.accessToken = accessToken;
-        AppUser.findOne({ googleId: profile.id }).then((existingUser) => {
-            if (existingUser) {
-                console.log('existingUser');
-                console.log(existingUser);
-                req.login(existingUser, () => done(null, profile));
-            } else {
-                console.log('newUser');
-                const newUser        = new AppUser();
-                // TODO: need ID ... 
-                newUser.google       = {};
-                newUser.google.id    = profile.id;
-                newUser.google.token = accessToken;
-                newUser.google.name  = profile.displayName;
-                newUser.google.email = profile.emails[0].value; // pull only the first email
-                newUser.email = newUser.google.email;
-                newUser.name  = profile.displayName;
-                newUser.password = utils.generateKey('hashcash');
-                newUser.save(function(err) {
-                    if (err) throw err;
-                    req.login(newUser, () => done(null, profile));
-                });
-            }
-        });
 
-        // var provider = 'google';
-        // var authSchema = 'oAuth 2.0';
+        var provider = 'google';
+        var authSchema = 'oAuth 2.0';
+        var credentials = {};
+        credentials.externalId = profile.id;
+        credentials.refreshToken = refreshToken;
+        UserIdentityModel.login(provider, authSchema, profile, credentials, 
+            {autoLogin:true}, function(err, loopbackUser, identity, token) {
+                if(err) throw err;
+                /* 
+                    Seemingly meaningless user info:
+                    { username: 'google.109898432929999337239',
+                        password:
+                        '$2a$10$QRRJr6YT0/8bswpwP5aSpOnxtqahFlXnfU7PSDeccTf5Is3dnu8Vi',
+                        email: '109898432929999337239@loopback.google.com',
+                        id: 12 }
+                */
+                console.log(loopbackUser);
 
-        // var credentials = {};
-        // credentials.externalId = profile.id;
-        // credentials.refreshToken = refreshToken;
-        // UserIdentityModel.login(provider, authSchema, profile, credentials, 
-        //     {autoLogin:true}, function(err, loopbackUser, identity, token) {
-        //         if(err) throw err;
-        //         // token is access token for thig login
-        //         console.log(loopbackUser);
-        //         console.log(identity);
-        //         console.log(token);
-        //         return res.send(token);
-        //   });
+                /** All info from provider 
+                 * { provider: 'google',
+                         authScheme: 'oAuth 2.0',
+                        externalId: '109898432929999337239',
+                        profile:
+                        { id: '109898432929999337239',
+                            displayName: 'Tyler Citrin',
+                            name: { familyName: 'Citrin', givenName: 'Tyler' },
+                    .... */
+                console.log(identity);
+
+
+                /*
+                    { created: 2018-10-08T02:54:42.816Z,
+                    ttl: 1209600,
+                    userId: 12,
+                    id:
+                    'lhbcENnodEq28msURQVBVxrxMqnEIn6mnrmttxZmAN3K4Cu7DOdZ7skf033H8iBD' }
+                    */
+                console.log(token);
+                done(null, profile)
+          });
+
+
+        // profile.accessToken = accessToken;
+        // AppUser.findOne({ googleId: profile.id }).then((existingUser) => {
+        //     if (existingUser) {
+        //         console.log('existingUser');
+        //         console.log(existingUser);
+        //         req.login(existingUser, () => done(null, profile));
+        //     } else {
+        //         console.log('newUser');
+        //         const newUser        = new AppUser();
+        //         // TODO: need ID ... 
+        //         newUser.google       = {};
+        //         newUser.google.id    = profile.id;
+        //         newUser.google.token = accessToken;
+        //         newUser.google.name  = profile.displayName;
+        //         newUser.google.email = profile.emails[0].value; // pull only the first email
+        //         newUser.email = newUser.google.email;
+        //         newUser.name  = profile.displayName;
+        //         newUser.password = utils.generateKey('hashcash');
+        //         newUser.save(function(err) {
+        //             if (err) throw err;
+        //             req.login(newUser, () => done(null, profile));
+        //         });
+        //     }
+        // });
     }));
 
     router.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));

@@ -16,7 +16,7 @@
     ]
   },
   "User": {
-    "dataSource": "local",
+    "dataSource": "db",
     "public": false
   },
   "AccessToken": {
@@ -42,11 +42,15 @@
     "dataSource": "local",
     "public": true
   },
+  "userCredential": {
+    "dataSource": "db",
+    "public": false
+  },
   "UserCredential": {
     "dataSource": "db",
     "public": false
   },
-  "UserIdentity": {
+  "userIdentity": {
     "dataSource": "db",
     "public": false
   }

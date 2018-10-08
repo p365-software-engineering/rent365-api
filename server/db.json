@@ -1,0 +1,26 @@
+{
+  "ids": {
+    "User": 1,
+    "AccessToken": 2,
+    "ACL": 1,
+    "RoleMapping": 1,
+    "Role": 1,
+    "UserCredential": 1,
+    "userCredential": 1,
+    "userIdentity": 2
+  },
+  "models": {
+    "User": {},
+    "AccessToken": {
+      "lhbcENnodEq28msURQVBVxrxMqnEIn6mnrmttxZmAN3K4Cu7DOdZ7skf033H8iBD": "{\"id\":\"lhbcENnodEq28msURQVBVxrxMqnEIn6mnrmttxZmAN3K4Cu7DOdZ7skf033H8iBD\",\"ttl\":1209600,\"created\":\"2018-10-08T02:54:42.816Z\",\"userId\":12}"
+    },
+    "ACL": {},
+    "RoleMapping": {},
+    "Role": {},
+    "UserCredential": {},
+    "userCredential": {},
+    "userIdentity": {
+      "1": "{\"provider\":\"google\",\"authScheme\":\"oAuth 2.0\",\"externalId\":\"109898432929999337239\",\"profile\":{\"id\":\"109898432929999337239\",\"displayName\":\"Tyler Citrin\",\"name\":{\"familyName\":\"Citrin\",\"givenName\":\"Tyler\"},\"emails\":[{\"value\":\"citrin.tyler@gmail.com\",\"type\":\"account\"}],\"photos\":[{\"value\":\"https://lh3.googleusercontent.com/-Mu6mTCeP2ns/AAAAAAAAAAI/AAAAAAAAAAA/AAN31DUTMXRK2-2_CA-V1Tys0FWVGfX5mQ/mo/photo.jpg?sz=50\"}],\"gender\":\"male\",\"provider\":\"google\",\"_raw\":\"{\\n \\\"kind\\\": \\\"plus#person\\\",\\n \\\"etag\\\": \\\"\\\\\\\"jb1Xzanox6i8Zyse4DcYD8sZqy0/LvReyvO3zVXt9OAatMS-FqpOQ3I\\\\\\\"\\\",\\n \\\"gender\\\": \\\"male\\\",\\n \\\"emails\\\": [\\n  {\\n   \\\"value\\\": \\\"citrin.tyler@gmail.com\\\",\\n   \\\"type\\\": \\\"account\\\"\\n  }\\n ],\\n \\\"objectType\\\": \\\"person\\\",\\n \\\"id\\\": \\\"109898432929999337239\\\",\\n \\\"displayName\\\": \\\"Tyler Citrin\\\",\\n \\\"name\\\": {\\n  \\\"familyName\\\": \\\"Citrin\\\",\\n  \\\"givenName\\\": \\\"Tyler\\\"\\n },\\n \\\"url\\\": \\\"https://plus.google.com/109898432929999337239\\\",\\n \\\"image\\\": {\\n  \\\"url\\\": \\\"https://lh3.googleusercontent.com/-Mu6mTCeP2ns/AAAAAAAAAAI/AAAAAAAAAAA/AAN31DUTMXRK2-2_CA-V1Tys0FWVGfX5mQ/mo/photo.jpg?sz=50\\\",\\n  \\\"isDefault\\\": true\\n },\\n \\\"isPlusUser\\\": true,\\n \\\"language\\\": \\\"en\\\",\\n \\\"circledByCount\\\": 8,\\n \\\"verified\\\": false\\n}\\n\",\"_json\":{\"kind\":\"plus#person\",\"etag\":\"\\\"jb1Xzanox6i8Zyse4DcYD8sZqy0/LvReyvO3zVXt9OAatMS-FqpOQ3I\\\"\",\"gender\":\"male\",\"emails\":[{\"value\":\"citrin.tyler@gmail.com\",\"type\":\"account\"}],\"objectType\":\"person\",\"id\":\"109898432929999337239\",\"displayName\":\"Tyler Citrin\",\"name\":{\"familyName\":\"Citrin\",\"givenName\":\"Tyler\"},\"url\":\"https://plus.google.com/109898432929999337239\",\"image\":{\"url\":\"https://lh3.googleusercontent.com/-Mu6mTCeP2ns/AAAAAAAAAAI/AAAAAAAAAAA/AAN31DUTMXRK2-2_CA-V1Tys0FWVGfX5mQ/mo/photo.jpg?sz=50\",\"isDefault\":true},\"isPlusUser\":true,\"language\":\"en\",\"circledByCount\":8,\"verified\":false}},\"credentials\":{\"externalId\":\"109898432929999337239\"},\"created\":\"2018-10-08T02:54:42.802Z\",\"modified\":\"2018-10-08T02:54:42.802Z\",\"userId\":12,\"id\":1}"
+    }
+  }
+}
