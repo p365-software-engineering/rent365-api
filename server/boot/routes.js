@@ -5,14 +5,17 @@ module.exports = function(app) {
     const router = app.loopback.Router();
     const strategies = require('../../strategies.json');
     const AppUser = app.models.appUser;
+    const UserIdentityModel = app.models.userIdentity;
     const passport = require('passport');
     const utils = require('../utils');
+    const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
     // TODO: change to user.id
     passport.serializeUser(function(user, cb) {
         cb(null, user);
     });
       
+    // TODO: change to user.id
     passport.deserializeUser(function(obj, cb) {
         cb(null, obj);
         // User.findById(id).then(user => {
@@ -22,78 +25,88 @@ module.exports = function(app) {
 
     const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
     passport.use(new GoogleStrategy({
+        tokenURL        : strategies.googleAuth.tokenURL,
         clientID        : strategies.googleAuth.clientID,
         clientSecret    : strategies.googleAuth.clientSecret,
         callbackURL     : strategies.googleAuth.callbackURL,
-    }, (accessToken, refreshToken, profile, done) => {
-        console.log(accessToken);
-        console.log();
-        console.log(refreshToken);
-        console.log();
-        console.log(profile);
-        // TODO: figureout how findOne works without setting googleId
+        passReqToCallback: true
+    }, (req, accessToken, refreshToken, profile, done) => {
+        profile.accessToken = accessToken;
         AppUser.findOne({ googleId: profile.id }).then((existingUser) => {
             if (existingUser) {
                 console.log('existingUser');
                 console.log(existingUser);
-                // AppUser.login(existingUser)
-                done(null, existingUser);
+                req.login(existingUser, () => done(null, profile));
             } else {
                 console.log('newUser');
                 const newUser        = new AppUser();
+                // TODO: need ID ... 
                 newUser.google       = {};
                 newUser.google.id    = profile.id;
                 newUser.google.token = accessToken;
                 newUser.google.name  = profile.displayName;
                 newUser.google.email = profile.emails[0].value; // pull only the first email
                 newUser.email = newUser.google.email;
+                newUser.name  = profile.displayName;
                 newUser.password = utils.generateKey('hashcash');
                 newUser.save(function(err) {
                     if (err) throw err;
-                    return done(null, newUser);
+                    req.login(newUser, () => done(null, profile));
                 });
             }
-        })
+        });
+
+        // var provider = 'google';
+        // var authSchema = 'oAuth 2.0';
+
+        // var credentials = {};
+        // credentials.externalId = profile.id;
+        // credentials.refreshToken = refreshToken;
+        // UserIdentityModel.login(provider, authSchema, profile, credentials, 
+        //     {autoLogin:true}, function(err, loopbackUser, identity, token) {
+        //         if(err) throw err;
+        //         // token is access token for thig login
+        //         console.log(loopbackUser);
+        //         console.log(identity);
+        //         console.log(token);
+        //         return res.send(token);
+        //   });
     }));
 
     router.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
-    router.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect : '/',
-            failureRedirect : '/'
-    }));
+    router.get('/auth/google/callback', 
+        passport.authenticate('google', { 
+            failureRedirect: '/login' 
+        }),
+        function(req, res) {
+            const accessToken = req.user.accessToken;
+            res.cookie('accessToken', accessToken, { signed: true , maxAge: 300000, httpOnly:true });
+            res.redirect('/cookie');
+        }
+    );
+
+    router.get('/cookie', ensureLoggedIn('/login'), function(req, res) {
+        // console.log('Cookies: ', req.cookies)
+        console.log('Signed Cookies: ', req.signedCookies)
+        console.log(req.session);
+        res.send('cookie');
+    });
 
     router.get('/login', function(req, res, next) {
+        console.log('unauthenticated');
+        res.send('unauthenticated');
 
-        // send back the token from appUsers/getToken
-        // const user = {
-        //     "email": "tcitrin@iu.edu",
-        //     "password": "tyler"
-        // }
-        const user = req.user;
-        // {
-            //   email: req.body.email,
-            //   accessToken: token.id
-        // }
-
-        AppUser.login(user, 'appUser', function(err, token) {
-            if (err) {
-              res.render('response', { //render view named 'response.ejs'
-                title: 'Login failed',
-                content: err,
-                redirectTo: '/',
-                redirectToLinkText: 'Try again'
-              });
-              return;
-            }
-        
-            // res.render('home', { //login user and render 'home' view
-            //   email: req.body.email,
-            //   accessToken: token.id
-            // });
-            res.send(token.id);
-          });
+        // AppUser.login(user, 'appUser', function(err, token) {
+        //     if (err) {
+        //       res.render('response', { //render view named 'response.ejs'
+        //         title: 'Login failed',
+        //         content: err,
+        //         redirectTo: '/',
+        //         redirectToLinkText: 'Try again'
+        //       });
+        //       return;
+        //     }        
     });
 
     router.post('/signup', function(req, res, next) {

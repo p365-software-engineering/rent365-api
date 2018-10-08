@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "compression": "^1.0.3",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.5.2",
     "express-session": "^1.15.6",
     "helmet": "^3.10.0",
@@ -22,6 +24,7 @@
     "loopback-connector-mssql": "^3.3.0",
     "loopback-connector-postgresql": "^3.4.0",
     "passport-google-oauth": "^1.0.0",
+    "passport-oauth2": "^1.4.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^3.0.0"
   },

@@ -5,6 +5,8 @@ const boot = require('loopback-boot');
 const app = module.exports = loopback();
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+// const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
 ////////////////////////////////
 //      Middle-Ware           //
@@ -32,12 +34,17 @@ try {
   process.exit(1); // fatal
 }
 
+
 // Set the sesssion
+app.middleware('session:before', cookieParser('cookieSecret'));
 app.middleware('session', session({
-  secret: 'kitty',
+  secret: 'this-is-a-secret-token',
   saveUninitialized: true,
   resave: true,
+  cookie: { maxAge: 100000 }
 }));
+// app.use(session({ secret: 'this-is-a-secret-token', }));
+
 
 app.start = function() {
   // start the web server

@@ -10,6 +10,7 @@
         "module": "passport-google-oauth",
         "strategy": "OAuth2Strategy",
         "callbackURL": "http://localhost:3000/auth/google/callback",
+        "tokenURL": "https:\/\/www.googleapis.com\/oauth2\/v3\/token",
         "authPath": "/auth/google",
         "callbackPath": "/auth/google/callback",
         "scope": ["email", "profile"],

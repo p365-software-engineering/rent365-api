@@ -20,7 +20,7 @@
     "public": false
   },
   "AccessToken": {
-    "dataSource": "local",
+    "dataSource": "db",
     "public": false
   },
   "ACL": {
@@ -43,11 +43,11 @@
     "public": true
   },
   "UserCredential": {
-    "dataSource": "local",
+    "dataSource": "db",
     "public": false
   },
   "UserIdentity": {
-    "dataSource": "local",
+    "dataSource": "db",
     "public": false
   }
 }
