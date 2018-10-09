@@ -19,12 +19,6 @@ app.middleware('parse', bodyParser.urlencoded({
   extended: true,
 }));
 
-// The access token is only available after boot
-app.middleware('auth', loopback.token({
-  model: app.models.accessToken,
-}));
-
-
 // attempt to build the providers/passport config
 let config = {};
 try {
@@ -53,7 +47,7 @@ app.start = function() {
     const baseUrl = app.get('url').replace(/\/$/, '');
     console.log('Web server listening at: %s', baseUrl);
     if (app.get('loopback-component-explorer')) {
-      console.log(process.env.PORT);
+      // console.log(process.env.PORT);
       // const explorerPath = app.get('loopback-component-explorer').mountPath;
       // console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
     }
@@ -71,6 +65,16 @@ boot(app, __dirname, function(err) {
 });
 
 
+// The access token is only available after boot
+app.middleware('auth', loopback.token({
+  model: app.models.accessToken,
+  currentUserLiteral: 'me',
+  // cookies: ['access_token'],
+  // headers: ['access_token', 'X-Access-Token'],
+  // params: ['access_token']
+}));
+
+
 
 ////////////////////////////////
 //      Passport              //
@@ -84,6 +88,7 @@ const passportConfigurator = new PassportConfigurator(app);
 // Passport Setup
 passportConfigurator.init();
 passportConfigurator.setupModels({
+  // TODO: check user
   userModel: app.models.user,
   userIdentityModel: app.models.userIdentity,
   userCredentialModel: app.models.userCredential,

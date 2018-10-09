@@ -9,14 +9,13 @@ var ds = server.dataSources.local;
 var tables = [
   'appUser', 
   'AccessToken', 
-  'UserCredential', 
-  'UserIdentity', 
-  'userIdentity'
+  'userCredential', 
+  'userIdentity', 
 ];
 
 // TODO: Try auto auto update
 
-ds.automigrate(tables, function(er) {
+ds.autoupdate(tables, function(er) {
   if (er) throw er;
   console.log('Loopback tables [' + tables + '] created in ', ds.adapter.name);
   ds.disconnect();
