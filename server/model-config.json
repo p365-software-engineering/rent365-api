@@ -16,7 +16,7 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false
   },
   "AccessToken": {
@@ -24,18 +24,18 @@
     "public": true
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "local",
     "public": false
   },
   "appUser": {

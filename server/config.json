@@ -18,5 +18,6 @@
       "limit": "100kb"
     },
     "cors": false
-  }
+  },
+  "cookieSecret": "I_like_kitties"
 }

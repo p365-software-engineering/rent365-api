@@ -7,10 +7,10 @@ var ds = server.dataSources.local;
 
 // TODO: separate this between built in tables and our own
 var tables = [
-  'appUser', 
-  'AccessToken', 
-  'userCredential', 
-  'userIdentity', 
+  'appUser',
+  'AccessToken',
+  'userCredential',
+  'userIdentity',
 ];
 
 // TODO: Try auto auto update
